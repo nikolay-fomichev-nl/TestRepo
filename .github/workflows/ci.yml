@@ -29,6 +29,7 @@ jobs:
           tag_name: test_tag
           files: "${{ matrix.platform }}.txt"
           fail_on_unmatched_files: true
+          token: ${{ secrets.TOKEN_TEST }}
 
       - name: Release
         uses: softprops/action-gh-release@v2
