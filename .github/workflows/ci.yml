@@ -25,8 +25,8 @@ jobs:
         uses: softprops/action-gh-release@v2
         with:
           prerelease: true
-          name: test_name
-          tag_name: test_tag
+          name: v${{ github.run_number }}_${{ github.run_attempt }}
+          tag_name: test_tag_${{ github.run_number }}_${{ github.run_attempt }}
           files: "${{ matrix.platform }}.txt"
           fail_on_unmatched_files: true
           token: ${{ secrets.TOKEN_TEST }}
