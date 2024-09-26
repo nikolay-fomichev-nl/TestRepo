@@ -18,7 +18,9 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Create file
-        run: echo "Platform ${{ matrix.platform }}" >> "${{ matrix.platform }}.txt"
+        run: |
+          echo "Running for ${{ matrix.platform }}"
+          echo "Platform ${{ matrix.platform }}" >> "${{ matrix.platform }}.txt"
 
       - name: Release
         uses: softprops/action-gh-release@v2
