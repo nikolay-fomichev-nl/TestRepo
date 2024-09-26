@@ -1,0 +1,28 @@
+name: Test
+
+on:
+  push:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+jobs:
+  main:
+    strategy:
+      max-parallel: 1
+      matrix:
+        platform: [Android, iOS]
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Create file
+        run: echo "Platform ${{ matrix.platform }}" >> "${{ matrix.platform }}.txt"
+
+      - name: Release
+        uses: softprops/action-gh-release@v2
+        with:
+          name: "Release - ${{ matrix.platform }} #${{ github.run_number }}"
+          make_latest: true
+          files: "${{ matrix.platform }}.txt"
