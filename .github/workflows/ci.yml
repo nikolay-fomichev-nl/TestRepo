@@ -21,6 +21,15 @@ jobs:
           echo "Running for ${{ matrix.platform }}"
           echo "Platform ${{ matrix.platform }}" >> "${{ matrix.platform }}.txt"
 
+      - name: Release test
+        uses: softprops/action-gh-release@v2
+        with:
+          prerelease: true
+          name: test_name
+          tag_name: test_tag
+          files: "${{ matrix.platform }}.txt"
+          fail_on_unmatched_files: true
+
       - name: Release
         uses: softprops/action-gh-release@v2
         if: startsWith(github.ref, 'refs/tags/')
