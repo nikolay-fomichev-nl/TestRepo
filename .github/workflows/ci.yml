@@ -22,6 +22,10 @@ jobs:
           echo "Running for ${{ matrix.platform }}"
           echo "Platform ${{ matrix.platform }}" >> "${{ matrix.platform }}.txt"
 
+      - name: Print value
+        run: |
+          echo "$(( ${{github.run_number}} + ${{vars.TEST_VAR}} ))"
+
       - name: Release test
         uses: softprops/action-gh-release@v2
         with:
