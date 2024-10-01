@@ -40,6 +40,8 @@ jobs:
         env:
           IS_TEST_VALUE: ${{ github.event.inputs.test_value }}
         run: |
+          some_value=$(pwd)
+          echo "SOME VALUE: $some_value"
           echo "$(( ${{github.run_number}} + ${{vars.TEST_VAR}} ))"
           is_test_value=$IS_TEST_VALUE
           echo "TEST VALUE: $is_test_value"
