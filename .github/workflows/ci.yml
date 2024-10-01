@@ -8,7 +8,7 @@ on:
       test_value:
         description: 'Test value'
         required: true
-        default: false
+        default: 'false'
         type: boolean
 
 jobs:
@@ -29,11 +29,11 @@ jobs:
           echo "Platform ${{ matrix.platform }}" >> "${{ matrix.platform }}.txt"
 
       - name: Print if true
-        if: github.event.inputs.test_value == true
+        if: github.event.inputs.test_value == 'true'
         run: echo "Test value is true"
 
       - name: Print if false
-        if: github.event.inputs.test_value == false
+        if: github.event.inputs.test_value == 'false'
         run: echo "Test value is false"
 
       - name: Print value
