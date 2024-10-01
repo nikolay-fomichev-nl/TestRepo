@@ -28,6 +28,14 @@ jobs:
           echo "Running for ${{ matrix.platform }}"
           echo "Platform ${{ matrix.platform }}" >> "${{ matrix.platform }}.txt"
 
+      - name: Print if true
+        if: github.event.inputs.test_value
+        run: echo "Test value is true!"
+
+      - name: Print if false
+        if: ${{ !github.event.inputs.test_value }}
+        run: echo "Test value is false"
+
       - name: Print value
         env:
           IS_TEST_VALUE: ${{ github.event.inputs.test_value }}
