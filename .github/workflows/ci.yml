@@ -29,9 +29,11 @@ jobs:
           echo "Platform ${{ matrix.platform }}" >> "${{ matrix.platform }}.txt"
 
       - name: Print value
+        env:
+          IS_TEST_VALUE: ${{ github.event.inputs.test_value }}
         run: |
           echo "$(( ${{github.run_number}} + ${{vars.TEST_VAR}} ))"
-          is_test_value=${{ github.event.inputs.test_value }}
+          is_test_value=$IS_TEST_VALUE
           echo "TEST VALUE: $is_test_value"
           if [ "$is_test_value" = true ] ; then
             echo 'Test value is true'
