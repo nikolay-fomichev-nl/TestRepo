@@ -1,0 +1,13 @@
+name: Test2
+
+on:
+  workflow_run:
+    workflows: ["Test"]
+
+jobs:
+  main:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Test
+        run: env
