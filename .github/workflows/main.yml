@@ -14,10 +14,15 @@ jobs:
       - name: Test
         run: env
 
+      - name: 'Test output'
+        run: |
+          echo "Event: ${{ toJSON(github.event) }}"
+
       - name: 'Download artifact'
         uses: actions/github-script@v6
         with:
           script: |
+            console.log(`Context: ${JSON.stringify(context)}`);
             let allArtifacts = await github.rest.actions.listWorkflowRunArtifacts({
                owner: context.repo.owner,
                repo: context.repo.repo,
