@@ -1,2 +1,2 @@
 # TestRepo
-Repo for testing things
+Repo for testing some things
