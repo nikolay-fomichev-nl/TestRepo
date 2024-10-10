@@ -12,13 +12,16 @@ jobs:
     
     steps:
       - name: Test
+        if: false
         run: env
 
       - name: 'Test output'
+        if: false
         run: |
           echo "Event: ${{ toJSON(github.event) }}"
 
       - name: 'Download artifact'
+        if: false
         uses: actions/github-script@v6
         with:
           script: |
@@ -41,6 +44,7 @@ jobs:
             fs.writeFileSync(`${process.env.GITHUB_WORKSPACE}/Android.txt.zip`, Buffer.from(download.data));
 
       - name: 'Test'
+        if: false
         run: ls -l
 
     
