@@ -79,6 +79,7 @@ jobs:
           tag_name: test_tag_static
           make_latest: true
           files: "${{ matrix.platform }}.txt"
+          token: ${{ secrets.TOKEN_TEST }}
 
       - name: Release
         uses: softprops/action-gh-release@v2
