@@ -61,7 +61,7 @@ jobs:
           path: "${{ matrix.platform }}.txt"
 
       - name: Release test
-        if: false
+        id: release_step
         uses: softprops/action-gh-release@v2
         with:
           prerelease: true
@@ -71,9 +71,13 @@ jobs:
           fail_on_unmatched_files: true
           token: ${{ secrets.TOKEN_TEST }}
 
+      - name: Print release
+        run: |
+          echo "${{ steps.release_step.outputs }}"
+
       - name: Release File
         uses: softprops/action-gh-release@v2
-        # if: startsWith(github.ref, 'refs/tags/')
+        if: false
         with:
           name: "Release - test_tag_static"
           tag_name: test_tag_static
