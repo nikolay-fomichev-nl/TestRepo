@@ -73,7 +73,7 @@ jobs:
 
       - name: Print release
         run: |
-          echo "${{ steps.release_step.outputs }}"
+          echo "${{ toJSON(steps.release_step.outputs) }}"
 
       - name: Release File
         uses: softprops/action-gh-release@v2
