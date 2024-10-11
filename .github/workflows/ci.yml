@@ -73,7 +73,11 @@ jobs:
 
       - name: Print release
         run: |
-          echo "${{ toJSON(steps.release_step.outputs) }}"
+          echo "URL: ${{ steps.release_step.outputs.url }}"
+          echo "ID: ${{ steps.release_step.outputs.id }}"
+          echo "UPLOAD_URL: ${{ steps.release_step.outputs.upload_url }}"
+          echo "ASSETS: ${{ toJSON(steps.release_step.outputs.assets) }}"
+          
 
       - name: Release File
         uses: softprops/action-gh-release@v2
