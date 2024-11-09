@@ -18,7 +18,7 @@ jobs:
       matrix:
         # platform: [Android, iOS]
         platform: [Android]
-    runs-on: macOS
+    runs-on: macOS-14
 
     steps:
       - name: Checkout
