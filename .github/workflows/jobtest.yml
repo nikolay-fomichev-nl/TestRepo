@@ -1,0 +1,97 @@
+name: Test3
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  main:
+    runs-on: macOS-15
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Test
+        run: |
+          release_notes="$(git log -1 --pretty=%B)
+          $(git log --pretty=format:'%H' -n 1), ref: '${{ github.ref }}'"
+          echo "Release notes: '$release_notes'"
+          exit 1
+
+      - name: Create file
+        run: |
+          echo "Creating file"
+          echo "Date $(date)" >> "TestFile.txt"
+      
+      - name: Print file
+        run: |
+          cat TestFile.txt
+
+      # - name: Print if true
+      #   if: github.event.inputs.test_value == 'true'
+      #   run: echo "Test value is true"
+
+      # - name: Print if false
+      #   if: github.event.inputs.test_value == 'false'
+      #   run: echo "Test value is false"
+
+      # - name: Print value
+      #   env:
+      #     IS_TEST_VALUE: ${{ github.event.inputs.test_value }}
+      #   run: |
+      #     some_value=$(pwd)
+      #     echo "SOME VALUE: $some_value"
+      #     echo "$(( ${{github.run_number}} + ${{vars.TEST_VAR}} ))"
+      #     is_test_value=$IS_TEST_VALUE
+      #     echo "TEST VALUE: $is_test_value"
+      #     if [ "$is_test_value" = true ] ; then
+      #       echo 'Test value is true'
+      #     else
+      #       echo 'Test value is false'
+      #     fi
+
+      # - name: Upload artifact
+      #   uses: actions/upload-artifact@v4
+      #   with:
+      #     name: "${{ matrix.platform }}.txt"
+      #     if-no-files-found: error
+      #     path: "${{ matrix.platform }}.txt"
+
+      # - name: Release test
+      #   id: release_step
+      #   uses: softprops/action-gh-release@v2
+      #   with:
+      #     prerelease: true
+      #     name: v${{ github.run_number }}_${{ github.run_attempt }}
+      #     tag_name: test_tag_${{ github.run_number }}_${{ github.run_attempt }}
+      #     files: "${{ matrix.platform }}.txt"
+      #     fail_on_unmatched_files: true
+      #     token: ${{ secrets.TOKEN_TEST }}
+
+      # - name: Print release
+      #   run: |
+      #     echo "URL: ${{ steps.release_step.outputs.url }}"
+      #     echo "ID: ${{ steps.release_step.outputs.id }}"
+      #     echo "UPLOAD_URL: ${{ steps.release_step.outputs.upload_url }}"
+      #     echo "ASSETS: ${{ toJSON(steps.release_step.outputs.assets) }}"
+          
+
+      # - name: Release File
+      #   uses: softprops/action-gh-release@v2
+      #   if: false
+      #   with:
+      #     name: "Release - test_tag_static"
+      #     tag_name: test_tag_static
+      #     make_latest: true
+      #     files: "${{ matrix.platform }}.txt"
+      #     token: ${{ secrets.TOKEN_TEST }}
+
+      # - name: Release
+      #   uses: softprops/action-gh-release@v2
+      #   if: false
+      #   # if: startsWith(github.ref, 'refs/tags/')
+      #   with:
+      #     name: "Release - ${{ matrix.platform }} #${{ github.run_number }}"
+      #     make_latest: true
+      #     files: "${{ matrix.platform }}.txt"
