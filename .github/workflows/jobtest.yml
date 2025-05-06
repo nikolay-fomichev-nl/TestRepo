@@ -17,7 +17,6 @@ jobs:
           release_notes="$(git log -1 --pretty=%B)
           $(git log --pretty=format:'%H' -n 1), ref: '${{ github.ref }}'"
           echo "Release notes: '$release_notes'"
-          exit 1
 
       - name: Create file
         run: |
