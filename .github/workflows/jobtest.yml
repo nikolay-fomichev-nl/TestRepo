@@ -27,6 +27,25 @@ jobs:
         run: |
           cat TestFile.txt
 
+  job2:
+    needs: main
+    runs-on: macOS-15
+
+    steps:
+      - name: Print file (Job2)
+        run: |
+          echo "JOB 2"
+          cat TestFile.txt
+  job3:
+    needs: main
+    runs-on: macOS-15
+
+    steps:
+      - name: Print file (Job3)
+        run: |
+          echo "JOB 3"
+          cat TestFile.txt
+
       # - name: Print if true
       #   if: github.event.inputs.test_value == 'true'
       #   run: echo "Test value is true"
