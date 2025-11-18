@@ -16,7 +16,6 @@ jobs:
         run: env
 
       - name: 'Test output'
-        if: false
         run: |
           echo "Event: ${{ toJSON(github.event) }}"
 
