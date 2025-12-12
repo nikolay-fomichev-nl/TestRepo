@@ -15,3 +15,8 @@ jobs:
         run: |
           echo "${CI}"
           echo "${GITHUB_RUN_ID}"
+          if [ "${CI}" = "true" ]; then
+            echo "true"
+          else
+            echo "false"
+          fi
