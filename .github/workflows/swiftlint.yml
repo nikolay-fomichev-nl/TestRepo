@@ -1,0 +1,14 @@
+name: SwiftLint
+
+on:
+  pull_request:
+    branches: ['main']
+
+jobs:
+  SwiftLint:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: cirruslabs/swiftlint-action@v1
+        with:
+          version: 0.59.1
