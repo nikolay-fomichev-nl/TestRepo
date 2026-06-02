@@ -1,15 +1,61 @@
+# name: SwiftLint
+
+# on:
+#   pull_request:
+#     branches: ['main']
+
+# jobs:
+#   SwiftLint:
+#     runs-on: macos-latest
+#     steps:
+#       - uses: actions/checkout@v4
+#       - uses: cirruslabs/swiftlint-action@v1
+#         with:
+#           version: 0.59.1
+#           args: --strict --config "./nested/swiftlint.yml"
+
 name: SwiftLint
 
 on:
   pull_request:
-    branches: ['main']
+
+concurrency:
+  group: pr-swiftlint-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
 
 jobs:
-  SwiftLint:
+  swiftlint:
     runs-on: macos-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: cirruslabs/swiftlint-action@v1
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Resolve pinned SwiftLint version
+        id: swiftlint
+        run: |
+          version="0.59.1"
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+          echo "Pinned SwiftLint: $version"
+
+      - name: Cache SwiftLint binary
+        id: cache-swiftlint
+        uses: actions/cache@v5
         with:
-          version: 0.59.1
-          args: --strict --config "./nested/swiftlint.yml"
+          path: ${{ runner.temp }}/swiftlint-bin
+          key: swiftlint-${{ runner.os }}-${{ steps.swiftlint.outputs.version }}
+
+      - name: Download SwiftLint
+        if: steps.cache-swiftlint.outputs.cache-hit != 'true'
+        run: |
+          curl -fsSL -o "$RUNNER_TEMP/portable_swiftlint.zip" \
+            "https://github.com/realm/SwiftLint/releases/download/${{ steps.swiftlint.outputs.version }}/portable_swiftlint.zip"
+          unzip -o "$RUNNER_TEMP/portable_swiftlint.zip" -d "$RUNNER_TEMP/swiftlint-bin"
+
+      - name: SwiftLint (strict, inline annotations)
+        run: |
+          "$RUNNER_TEMP/swiftlint-bin/swiftlint" lint --strict --quiet \
+            --reporter github-actions-logging \
+            --config nested/swiftlint.yml nested
